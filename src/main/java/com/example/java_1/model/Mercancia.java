@@ -1,6 +1,7 @@
 package com.example.java_1.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 import io.micrometer.core.lang.Nullable;
 
@@ -19,6 +20,7 @@ public class Mercancia {
     @Column(name = "nombre")
     private String nombre;
 
+    @JsonProperty
     @Column(name = "cantidad")
     private int cantidad;
 

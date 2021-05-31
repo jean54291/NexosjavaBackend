@@ -27,22 +27,36 @@ public class CargoServiceImpl implements IService<Cargo> {
 
     @Override
     public Object listar() {
-        List<Cargo> cargos = repo.findAll();
-        if(cargos.size()==0) {
-            return new ResponseEntity(new ExceptionMessage(Errors.CARGOS_VACIO.toString(),Errors.CARGOS_VACIO.getDescripcion()),HttpStatus.INTERNAL_SERVER_ERROR);
+
+        try{
+            List<Cargo> cargos = repo.findAll();
+            if(cargos.size()==0) {
+                return new ResponseEntity(new ExceptionMessage(Errors.CARGOS_VACIO.toString(),Errors.CARGOS_VACIO.getDescripcion()),HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            return cargos;
+        }catch (Exception e){
+            return new ResponseEntity(new ExceptionMessage(Errors.ERROR_VALIDAR_DATOS_ENVIADOS.toString(),Errors.ERROR_VALIDAR_DATOS_ENVIADOS.getDescripcion()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return cargos;
+
+
     }
 
     @Override
     public Object insertar(Cargo carg) {
-
-        return repo.save(carg);
+        try{
+            return repo.save(carg);
+        }catch (Exception e){
+            return new ResponseEntity(new ExceptionMessage(Errors.ERROR_VALIDAR_DATOS_ENVIADOS.toString(),Errors.ERROR_VALIDAR_DATOS_ENVIADOS.getDescripcion()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override
     public Object modificar(Cargo carg) {
-        return repo.save(carg);
+        try{
+            return repo.save(carg);
+        }catch (Exception e){
+            return new ResponseEntity(new ExceptionMessage(Errors.ERROR_VALIDAR_DATOS_ENVIADOS.toString(),Errors.ERROR_VALIDAR_DATOS_ENVIADOS.getDescripcion()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override
@@ -65,13 +79,23 @@ public class CargoServiceImpl implements IService<Cargo> {
 
     @Override
     public Object getByRegistro(Cargo datosFiltros) {
-        Cargo cargos = repo.findByDescripcion(datosFiltros.getDescripcion());
-        return ResponseEntity.ok(cargos);
+        try{
+            Cargo cargos = repo.findByDescripcion(datosFiltros.getDescripcion());
+            return ResponseEntity.ok(cargos);
+        }catch (Exception e){
+            return new ResponseEntity(new ExceptionMessage(Errors.ERROR_VALIDAR_DATOS_ENVIADOS.toString(),Errors.ERROR_VALIDAR_DATOS_ENVIADOS.getDescripcion()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @Override
     public Object getByDato(Integer id) {
-        List<Cargo> car = repo.findByID(id);
-        return car;
+        try{
+            List<Cargo> car = repo.findByID(id);
+            return car;
+        }catch (Exception e){
+            return new ResponseEntity(new ExceptionMessage(Errors.ERROR_VALIDAR_DATOS_ENVIADOS.toString(),Errors.ERROR_VALIDAR_DATOS_ENVIADOS.getDescripcion()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 }

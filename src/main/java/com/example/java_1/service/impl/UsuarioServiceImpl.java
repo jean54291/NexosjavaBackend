@@ -22,23 +22,35 @@ public class UsuarioServiceImpl implements IService<Usuario> {
 
     @Override
     public Object listar() {
-        List<Usuario> usuarios = repo.findAll();
-        if(usuarios.size()==0) {
-            return new ResponseEntity(new ExceptionMessage(Errors.USUARIOS_VACIO.toString(),Errors.USUARIOS_VACIO.getDescripcion()),HttpStatus.INTERNAL_SERVER_ERROR);
+        try {
+            List<Usuario> usuarios = repo.findAll();
+            if(usuarios.size()==0) {
+                return new ResponseEntity(new ExceptionMessage(Errors.USUARIOS_VACIO.toString(),Errors.USUARIOS_VACIO.getDescripcion()),HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            //List<Usuario> usuarios = all.stream().filter(usuario -> !usuario.getNombre().equalsIgnoreCase("natalia")).collect(Collectors.toList());
+            return ResponseEntity.ok(usuarios);
+        }catch (Exception e){
+            return new ResponseEntity(new ExceptionMessage(Errors.ERROR_VALIDAR_DATOS_ENVIADOS.toString(),Errors.ERROR_VALIDAR_DATOS_ENVIADOS.getDescripcion()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        //List<Usuario> usuarios = all.stream().filter(usuario -> !usuario.getNombre().equalsIgnoreCase("natalia")).collect(Collectors.toList());
-        return ResponseEntity.ok(usuarios);
     }
 
     @Override
     public Object insertar(Usuario user) {
 
-        return repo.save(user);
+        try {
+            return repo.save(user);
+        }catch (Exception e){
+            return new ResponseEntity(new ExceptionMessage(Errors.ERROR_VALIDAR_DATOS_ENVIADOS.toString(),Errors.ERROR_VALIDAR_DATOS_ENVIADOS.getDescripcion()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override
     public Object modificar(Usuario user) {
-        return repo.save(user);
+        try {
+            return repo.save(user);
+        }catch (Exception e){
+            return new ResponseEntity(new ExceptionMessage(Errors.ERROR_VALIDAR_DATOS_ENVIADOS.toString(),Errors.ERROR_VALIDAR_DATOS_ENVIADOS.getDescripcion()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override
@@ -55,13 +67,21 @@ public class UsuarioServiceImpl implements IService<Usuario> {
 
     @Override
     public Object getByRegistro(Usuario datosFiltros) {
-        Usuario usuario = repo.findByNombre(datosFiltros.getNombre());
-        return usuario;
+        try {
+            Usuario usuario = repo.findByNombre(datosFiltros.getNombre());
+            return usuario;
+        }catch (Exception e){
+            return new ResponseEntity(new ExceptionMessage(Errors.ERROR_VALIDAR_DATOS_ENVIADOS.toString(),Errors.ERROR_VALIDAR_DATOS_ENVIADOS.getDescripcion()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override
     public Object getByDato(Integer id) {
-        List<Usuario> usuario = repo.usuariosById(id);
-        return usuario;
+        try {
+            List<Usuario> usuario = repo.usuariosById(id);
+            return usuario;
+        }catch (Exception e){
+            return new ResponseEntity(new ExceptionMessage(Errors.ERROR_VALIDAR_DATOS_ENVIADOS.toString(),Errors.ERROR_VALIDAR_DATOS_ENVIADOS.getDescripcion()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

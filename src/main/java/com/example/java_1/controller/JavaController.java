@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+//Los controladores que se utilizan para los servicios estan en la carpeta res
+
 @Controller
 public class JavaController {
     @Autowired
